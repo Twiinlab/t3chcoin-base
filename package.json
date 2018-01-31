@@ -13,9 +13,10 @@
     }
   ],
   "scripts": {
-    "testrpc": "node_modules/.bin/testrpc",
+    "start": "ganache-cli",
+    "init": "node init.js",
     "app": "node app.js",
-    "start": "open http://localhost:3000/api/"
+    "web": "open http://localhost:3000/api/"
   },
   "private": true,
   "dependencies": {
