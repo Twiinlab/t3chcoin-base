@@ -1,0 +1,18 @@
+{
+  "extends": "default",
+  "rules": {
+    "avoid-throw": false,
+    "avoid-suicide": "error",
+    "avoid-sha3": "warn",
+    "const-name-snakecase": false,
+    "compiler-gt-0_4": "error",
+    "indent": [ "warn", 2 ],
+    "no-simple-event-func-name": false,
+    "max-line-length": ["warn", 200],
+    "not-rely-on-time": false,
+    "max-states-count": false,
+    "no-empty-blocks": false,
+    "visibility-modifier-order": false,
+    "avoid-tx-origin": false    
+  }
+}
