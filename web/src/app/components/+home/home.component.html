@@ -1,0 +1,38 @@
+<div class="container">
+  <div class="jumbotron">
+    <h2>Hello Etherium Basic!!</h2>
+  </div>
+  <div class="panel panel-primary">
+    <div class="panel-heading">Candidates</div>
+    <div class="panel-body">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Votes</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of candidates">
+            <td>{{ item.candidate }}</td>
+            <td>{{ item.votes }}</td>
+            <td><button type="button" class="btn btn-primary" (click)="onAddVote(item.candidate)">Vote</button></td>           
+          </tr>
+          <tr>
+            <td colspan="3">
+              <div class="form-inline">
+                <div class="form-group">
+                  <label for="exampleInputName2">New Candidate</label>
+                  <input type="text" class="form-control" [(ngModel)]="newCandidateName" placeholder="Name">
+                  <button type="button" [disabled]="!newCandidateName" class="btn btn-primary" (click)="onAddCandidate(newCandidateName)">Add</button>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
