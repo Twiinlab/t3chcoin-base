@@ -1,36 +1,13 @@
 const Web3 = require('web3');
 const contract = require('truffle-contract');
-const votingArtifacts = require('../build/contracts/Voting.json');
+const votingArtifacts = require('../../build/contracts/Voting.json');
 const config = require('./config');
 
-
-const fs = require('fs');
-const solc = require('solc');
+console.log('blockchain ', config.blockchain);
 
 web3 = new Web3(new Web3.providers.HttpProvider(config.blockchain.provider));
 VotingContract = contract(votingArtifacts);
 VotingContract.setProvider(web3.currentProvider);
-web3.eth.accounts = config.blockchain.accounts;
-
-// const code = fs.readFileSync('./contracts/Voting.sol').toString();
-// const compiledCode = solc.compile(code);
-
-// var abiDefinition = JSON.parse(compiledCode.contracts[':Voting'].interface);
-// var byteCode = compiledCode.contracts[':Voting'].bytecode;
-
-// var VotingContract = web3.eth.contract(abiDefinition)
-
-// VotingContract.new(['Rama','Nick','Jose'], {
-//     from: web3.eth.accounts[0], gas: 4712388
-// })
-// .then(instance => {
-//     console.log('instance ', instance);
-// })
-
-
-const deployedContract = {
-    address: '0x03bcf2611e849e753b4ed96a172d626ffe5b1247'
-}
 
 exports.getHello = function(req, res) {
     res.json({ message: 'hooray! welcome to our api!'});
@@ -39,20 +16,14 @@ exports.getHello = function(req, res) {
 var mainContractInstance;
 exports.getCandidatesList = function(req, res) {
     console.log('GET /candidates');
-    getCandidatesListFromBlockchain(VotingContract, deployedContract.address)
-    .then(result => {
-      console.log('result', result);
-      res.json({ message: result });
-    })
-    .catch(error => {
-      console.log('error', error);
-    });
+    getCandidatesListFromBlockchain(VotingContract, config.getSmartContractInstance())
+    .then(result => { res.json({ message: result }); })
+    .catch(error => { console.log('error', error); });
 }
 
 const getCandidatesListFromBlockchain = async (customContract, customAddress) => {  
   var contractInstance =  await customContract.at(customAddress);
   var candidatesHex = await contractInstance.getCandidates.call();
-  console.log('candidatesHex', candidatesHex);
   var candidates = candidatesHex.map(parseHexToStr);
   return await Promise.all(candidates.map(async (can) => {
       return {
@@ -65,14 +36,14 @@ const getCandidatesListFromBlockchain = async (customContract, customAddress) =>
 
 exports.addCandidate = function(req, res) {
     console.log('POST /candidates/:candidate_name Body:' + req.body.toString());
-    var contractInstance = VotingContract.at(deployedContract.address);
+    var contractInstance = VotingContract.at(config.getSmartContractInstance());
     contractInstance.addCandidate(req.body.candidateName, {from: web3.eth.accounts[0]})
     res.json({ message: 'candidate created' });
 }
 
 exports.getVotesByCandidate = function(req, res) {
     console.log('GET /candidates Params:' + req.params);
-    var contractInstance = VotingContract.at(deployedContract.address);
+    var contractInstance = VotingContract.at(config.getSmartContractInstance());
     var candidateVotes = contractInstance.totalVotesFor(req.body.candidate_name, {from: web3.eth.accounts[0]})
     res.json({ message: candidateVotes });
 }
@@ -80,14 +51,14 @@ exports.getVotesByCandidate = function(req, res) {
 
 exports.addVoteByCandidate = function(req, res) {
     console.log('PUT /candidates/:candidate_name Params:' + req.params.toString() );
-    var contractInstance = VotingContract.at(deployedContract.address);
+    var contractInstance = VotingContract.at(config.getSmartContractInstance());
     var candidateVotes = contractInstance.voteForCandidate(req.params.candidate_name, {from: web3.eth.accounts[0]})
     res.json({ message: candidateVotes });
 }
 
 exports.deleteByCandidate = function(req, res) {
     console.log('DELETE /candidates/:candidate_name Params:' + req.params.toString());
-    var contractInstance = VotingContract.at(deployedContract.address);
+    var contractInstance = VotingContract.at(config.getSmartContractInstance());
     var candidateVotes = contractInstance.removeCandidate(req.params.candidate_name, {from: web3.eth.accounts[0]})
     res.json({ message: 'candidate deleted' });
 }

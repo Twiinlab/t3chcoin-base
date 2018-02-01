@@ -4,6 +4,7 @@ contract Voting {
 
   mapping (bytes32 => uint8) public votesReceived;
   bytes32[] public candidateList;
+  event NewVote( bytes32 candidate, uint votes);
 
   function Voting(bytes32[] candidateNames) public {
     candidateList = candidateNames;
@@ -45,7 +46,9 @@ contract Voting {
 
   function voteForCandidate(bytes32 candidate) public returns (uint8) {
     require(validCandidate(candidate));
-    return votesReceived[candidate] += 1;
+    votesReceived[candidate] += 1;
+    NewVote(candidate, votesReceived[candidate]);
+    return votesReceived[candidate];
   }
 
   
