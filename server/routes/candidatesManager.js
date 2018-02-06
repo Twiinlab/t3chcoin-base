@@ -1,7 +1,7 @@
 const Web3 = require('web3');
 const contract = require('truffle-contract');
 const votingArtifacts = require('../../build/contracts/Voting.json');
-const config = require('./config');
+const config = require('../config');
 
 console.log('blockchain ', config.blockchain);
 

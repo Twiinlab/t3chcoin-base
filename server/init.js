@@ -1,7 +1,7 @@
 const Web3 = require('web3');
 const contract = require('truffle-contract');
 const votingArtifacts = require('../build/contracts/Voting.json');
-const config = require('./routes/config');
+const config = require('./config');
 
 module.exports = function () {
     web3 = new Web3(new Web3.providers.HttpProvider(config.blockchain.provider));
