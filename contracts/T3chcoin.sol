@@ -1,8 +1,9 @@
-pragma solidity ^0.4.17;
+pragma solidity 0.4.18;
 
 contract T3chcoin {
 
   enum MessageTypes {Twit, TwitLike, TwitRetweet }
+  MessageTypes[] private idToMessageTypes = [ MessageTypes.Twit, MessageTypes.TwitLike, MessageTypes.TwitRetweet];
   enum Status {Pending, Active, Blocked }
   
   struct MessageDetail {
@@ -31,9 +32,38 @@ contract T3chcoin {
   mapping(bytes32 => UserProfile) users;
   bytes32[] userIds;
   
-  
-  function T3chcoin(bytes32[] candidateNames) public {
+  function T3chcoin() public {
     owner = tx.origin;
+  }
+  
+  function isInSocialIds(bytes32 newSocialId) public view returns (bool) {
+    for (uint i = 0; i < socialIds.length; i++) {
+      if (socialIds[i] == newSocialId) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  function addSocial(bytes32 socialId, bytes32 message, uint messageTypeIndex) public {
+    MessageTypes mt = idToMessageTypes[messageTypeIndex];
+    if (!isInSocialIds(socialId)) {
+      socialIds.push(socialId);
+      socials[socialId].userId = socialId;
+    }
+    increaseSocialType(socialId, mt);
+    socials[socialId].messages.push(MessageDetail(message,mt));
+  }
+
+  function increaseSocialType(bytes32 socialId, MessageTypes messageType) public {
+    if (messageType == MessageTypes.Twit) {
+      socials[socialId].totalTwit++;
+    } else if (messageType == MessageTypes.TwitLike) {
+      socials[socialId].totalTwitLike++;
+    } else if (messageType == MessageTypes.TwitRetweet) {
+      socials[socialId].totalTwitRetweet++;
+    }
+    socials[socialId].totalAll++;
   }
 
   function getTopSocials() public view returns( bytes32[5][10] ) {
@@ -56,7 +86,7 @@ contract T3chcoin {
     return flatSocialProfileList(result);
   }
 
-  function flatSocialProfileList(SocialProfile[] list) public returns( bytes32[5][10] ) {
+  function flatSocialProfileList(SocialProfile[] list) public returns(bytes32[5][10]) {
     bytes32[5][10] storage result;
     for (uint i = 0; i < list.length; i++) {
       result[i] = [bytes32(list[i].userId), 
@@ -67,56 +97,5 @@ contract T3chcoin {
     }
     return result;
   }
-
-  // function removeCandidate(bytes32 candidateName) public returns(bytes32[]) {
-  //     require(validCandidate(candidateName));
-  //     var index = indexOf(candidateList, candidateName);
-  //     if (index >= 0) {
-  //       candidateList = removeCandidateByIndex(index);
-  //     }
-  //     return candidateList;
-  // }
-
-  // function removeCandidateByIndex(uint index) public returns(bytes32[]) {
-  //   if (index >= candidateList.length) {
-  //     return candidateList;
-  //   }
-  //   for (uint i = index; i < candidateList.length-1; i++) {
-  //       candidateList[i] = candidateList[i+1];
-  //   }
-  //   delete candidateList[candidateList.length-1];
-  //   candidateList.length--;
-  //   return candidateList;
-  // }
-
-  // function totalVotesFor(bytes32 candidate) public view returns (uint8) {
-  //   require(validCandidate(candidate));
-  //   return votesReceived[candidate];
-  // }
-
-  // function voteForCandidate(bytes32 candidate) public returns (uint8) {
-  //   require(validCandidate(candidate));
-  //   votesReceived[candidate] += 1;
-  //   NewVote(candidate, votesReceived[candidate]);
-  //   return votesReceived[candidate];
-  // }
-
-  
-  // function indexOf(bytes32[] values, bytes32 value) public pure returns(uint) {
-  //   uint i = 0;
-  //   while (values[i] != value) {
-  //     i++;
-  //   }
-  //   return i;
-  // }
-
-  // function validCandidate(bytes32 candidate) public view returns (bool) {
-  //   for (uint i = 0; i < candidateList.length; i++) {
-  //     if (candidateList[i] == candidate) {
-  //       return true;
-  //     }
-  //   }
-  //   return false;
-  //  }
 
 }
