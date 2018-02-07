@@ -83,19 +83,19 @@ contract T3chcoin {
         }
       }
     }
-    return flatSocialProfileList(result);
+    bytes32[5][10] flatResult;
+    for (uint z = 0; z < result.length; z++) {
+      flatResult[z] = flatSocialProfile(result[z]);
+    }
+    return flatResult;
   }
 
-  function flatSocialProfileList(SocialProfile[] list) public returns(bytes32[5][10]) {
-    bytes32[5][10] storage result;
-    for (uint i = 0; i < list.length; i++) {
-      result[i] = [bytes32(list[i].userId), 
-                   bytes32(list[i].totalAll),
-                   bytes32(list[i].totalTwit),
-                   bytes32(list[i].totalTwitLike),
-                   bytes32(list[i].totalTwitRetweet)];
-    }
-    return result;
+  function flatSocialProfile(SocialProfile item) public returns(bytes32[5]) {
+    return [bytes32(item.userId), 
+            bytes32(item.totalAll),
+            bytes32(item.totalTwit),
+            bytes32(item.totalTwitLike),
+            bytes32(item.totalTwitRetweet)];
   }
 
 }
