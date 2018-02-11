@@ -14,7 +14,6 @@ var corsOptions = {
 app.use(cors(corsOptions));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use(express.static(__dirname + '/../web/dist'));
 
 var routes = require('./routes/routes')
 routes.assignRoutes(app);

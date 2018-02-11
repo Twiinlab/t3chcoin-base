@@ -12,23 +12,10 @@
       "email": "dvdchavarri@gmail.com"
     }
   ],
-  "watch": {
-    "run_start": {
-      "patterns": [
-        "contracts",
-        "migrations",
-        "test"
-      ],
-      "extensions": "sol, js",
-      "quiet": true,
-      "legacyWatch": true
-    }
-  },
   "scripts": {
     "lint": "solhint contracts/**/*.sol",
     "build": "truffle compile",
     "test": "truffle test",
-    "test-watch": "node_modules/.bin/npm-watch test",
     "ganache": "ganache-cli",
     "init": "node ./server/init.js",
     "app": "node ./server/app",
@@ -55,7 +42,6 @@
     "babel-preset-stage-3": "^6.17.0",
     "babel-register": "^6.23.0",
     "chai": "^4.1.2",
-    "npm-watch": "^0.3.0",
     "rimraf": "^2.6.2",
     "solhint": "^1.1.9"
   }

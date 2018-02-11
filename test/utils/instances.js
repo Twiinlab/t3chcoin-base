@@ -10,11 +10,16 @@ async function getTwit() {
     return { socialId: 'socialId', message: 'message', messageTypeIndex: MessageTypes.Twit };
 }
 
+async function getUser() {
+    return { userId: 'userId', userName: 'userName', socialId: 'socialId' };
+}
+
 async function getT3chcoinInstance() {
     return await T3chcoin.new();
 }
 
 export {
     getT3chcoinInstance,
-    getTwit
+    getTwit,
+    getUser
 }

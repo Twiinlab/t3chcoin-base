@@ -1,26 +1,24 @@
 const Web3 = require('web3');
 const contract = require('truffle-contract');
-const votingArtifacts = require('../build/contracts/Voting.json');
+const t3chcoinArtifacts = require('../build/contracts/T3chcoin.json');
 const config = require('./config');
 
 module.exports = function () {
     web3 = new Web3(new Web3.providers.HttpProvider(config.blockchain.provider));
-    VotingContract = contract(votingArtifacts);
-    VotingContract.setProvider(web3.currentProvider);
-
-    console.log('config.blockchain: ', config.blockchain);
+    T3chcoinContract = contract(t3chcoinArtifacts);
+    T3chcoinContract.setProvider(web3.currentProvider);
 
     if (!config.blockchain.smartContractInstance){
-        VotingContract.new(['Rama','Nick','Jose'], {
+        T3chcoinContract.new( 'T3chcoin' , {
             from: web3.eth.accounts[0], gas: 4712388
         })
         .then(instance => {
-            console.log('instance: ', instance.address);
+            console.log('T3chcoin instance: ', instance.address);
             config.setSmartContractInstance(instance.address);
-            instance.NewVote().watch(function(error, result){
+            instance.NewMessageEvent().watch(function(error, result){
             if (!error)
                 {
-                console.log(parseHexToStr(result.args.candidate) + ' (' + result.args.votes + ' votes)');
+                console.log(parseHexToStr(result.args.socialId) + ' (message: ' + parseHexToStr(result.args.message) + ' | type: ' + result.args.messageTypeIndex + ')');
                 } else {
                 console.log(error);
                 }

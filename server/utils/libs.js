@@ -12,7 +12,12 @@ function parseHexToStr (hex) {
   return str;
 }
 
+function parseHexToDecimal (hex) {
+  return parseInt(hex);
+}
+
 module.exports = {
   parseStrToHex,
-  parseHexToStr
+  parseHexToStr,
+  parseHexToDecimal
 }

@@ -1,11 +1,17 @@
-var candidates = require('./candidatesManager')
+var controller = require('./controller')
 
 exports.assignRoutes = function(app) {
-    app.get('/api/', candidates.getHello);
-    app.get('/api/candidates/', candidates.getCandidatesList)
-    app.post('/api/candidates/', candidates.addCandidate)
-    app.get('/api/candidates/:candidate_name', candidates.getVotesByCandidate)
-    app.put('/api/candidates/:candidate_name', candidates.addVoteByCandidate)
-    app.delete('/api/candidates/:candidate_name', candidates.deleteByCandidate)
+    app.get('/api/', controller.getHello); 
+    
+    app.get('/api/social', controller.getSocialTopList);
+    app.post('/api/social', controller.addSocialMessage); 
+    
+    app.post('/api/user', controller.addUser);
+    app.put('/api/user/:userid/buy/:itemid', controller.buyItem);        
+    app.get('/api/user/:userid', controller.getUser);    
+    app.get('/api/user', controller.getUserTopList);
+
+    app.get('/api/catalog/', controller.getItemCatalogList);
+
 }
   
