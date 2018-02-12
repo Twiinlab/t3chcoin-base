@@ -15,10 +15,7 @@ const getTopSocials = async () => {
   var contractInstance =  await T3chcoinContract.at(config.getSmartContractInstance());
   var socials = (await contractInstance.getTopSocials.call(10)).map(libs.parseHexToStr);
   return await Promise.all(socials.map(async (socialId) => {
-      return {
-        socialId: socialId,
-        userProfile: new Social(await contractInstance.getSocialProfileById.call(socialId)).toJson()
-      };
+      return new Social(await contractInstance.getSocialProfileById.call(socialId)).toJson();
   }));
 }
 
