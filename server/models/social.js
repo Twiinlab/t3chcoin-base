@@ -3,10 +3,10 @@ const libs = require('../utils/libs');
 
 var Social = function (data) {
   this.socialId = libs.parseHexToStr(data[0]);
-  this.totalAll = data[1];
-  this.totalTwit = data[2];
-  this.totalTwitLike = data[3];
-  this.totalTwitRetweet = data[4];
+  this.totalAll = data[1].toNumber();
+  this.totalTwit = data[2].toNumber();
+  this.totalTwitLike = data[3].toNumber();
+  this.totalTwitRetweet = data[4].toNumber();
 }
     
 Social.prototype.socialId = {}

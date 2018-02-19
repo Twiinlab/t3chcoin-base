@@ -9,21 +9,21 @@ module.exports = function () {
     T3chcoinContract.setProvider(web3.currentProvider);
 
     if (!config.blockchain.smartContractInstance){
-        T3chcoinContract.new( 'T3chcoin' , {
-            from: web3.eth.accounts[0], gas: 4712388
-        })
-        .then(instance => {
-            console.log('T3chcoin instance: ', instance.address);
-            config.setSmartContractInstance(instance.address);
-            instance.NewMessageEvent().watch(function(error, result){
-            if (!error)
-                {
-                console.log(parseHexToStr(result.args.socialId) + ' (message: ' + parseHexToStr(result.args.message) + ' | type: ' + result.args.messageTypeIndex + ')');
-                } else {
-                console.log(error);
-                }
-            });
-        })
+      T3chcoinContract.new( 'T3chcoin' , {
+          from: web3.eth.accounts[0], gas: 4712388
+      })
+      .then(instance => {
+        console.log('T3chcoin instance: ', instance.address);
+        config.setSmartContractInstance(instance.address);
+        instance.NewMessageEvent().watch(function(error, result){
+        if (!error)
+          {
+          console.log(parseHexToStr(result.args.socialId) + ' (message: ' + parseHexToStr(result.args.message) + ' | type: ' + result.args.messageTypeIndex + ')');
+          } else {
+          console.log(error);
+          }
+        });
+      })
     }
 }
 

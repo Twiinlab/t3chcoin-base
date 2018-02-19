@@ -2,8 +2,8 @@
 const libs = require('../utils/libs');
 
 var Item = function (data) {
-  this.itemId = data[2];
-  this.description = data[0];
+  this.itemId = libs.parseHexToDecimal(data[2]);
+  this.description = libs.parseHexToStr(data[0]);
   this.price = data[1].toNumber();
 }
 

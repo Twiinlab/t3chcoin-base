@@ -6,10 +6,10 @@ const config = require('../../config');
 const libs = require('../../utils/libs');
 const { User, Social, Item } = require('../../models');
 
-
 web3 = new Web3(new Web3.providers.HttpProvider(config.blockchain.provider));
 T3chcoinContract = contract(t3chcoinArtifacts);
 T3chcoinContract.setProvider(web3.currentProvider);
+T3chcoinContract.web3.eth.defaultAccount= web3.eth.accounts[0];
 
 const getTopSocials = async () => {
   var contractInstance =  await T3chcoinContract.at(config.getSmartContractInstance());
@@ -19,24 +19,38 @@ const getTopSocials = async () => {
   }));
 }
 
+const getSocial = async (socialId) => {
+  var contractInstance =  await T3chcoinContract.at(config.getSmartContractInstance());
+  return new Social(await await contractInstance.getSocialProfileById.call(socialId));
+}
+
 const getUserTopList = async () => {
   var contractInstance =  await T3chcoinContract.at(config.getSmartContractInstance());
   var users = (await contractInstance.getTopUsers.call(10)).map(libs.parseHexToStr);
-  return await Promise.all(users.map(async (user) => {
-      return new User(await contractInstance.getUserProfileById.call(user)).toJson();
+  return await Promise.all(users.map(async (userId) => {
+      var user = new User(await contractInstance.getUserProfileById.call(userId)).toJson();
+      user.userId = userId;
+      return user;
   }));
 }
 
 const getUser = async (userId) => {
   var contractInstance =  await T3chcoinContract.at(config.getSmartContractInstance());
   var user = new User(await contractInstance.getUserProfileById.call(userId));
+  user.userId = userId;
   user.setItems(await contractInstance.getUserItemsById.call(userId));
   return user.toJson();
 }
 
 const addUser = async (userId, userName, socialId) => {
   var contractInstance =  await T3chcoinContract.at(config.getSmartContractInstance());
-  var result = await contractInstance.addUser(userId, userName, socialId);
+  var result = await contractInstance.addUser(userId, userName, socialId, { gas:3000000 });
+  return true;
+}
+
+const updateUser = async (userId, userName, avatar, selectedItem) => {
+  var contractInstance =  await T3chcoinContract.at(config.getSmartContractInstance());
+  var result = await contractInstance.updateUser(userId, userName, avatar, selectedItem,  { gas:3000000 });
   return true;
 }
 
@@ -48,7 +62,7 @@ const buyItem = async (userId, itemId) => {
 
 const addSocialMessage = async (socialId, message, messageTypeIndex) => {
   var contractInstance =  await T3chcoinContract.at(config.getSmartContractInstance());
-  var result = await contractInstance.addSocialMessage(socialId, message, messageTypeIndex);
+  var result = await contractInstance.addSocialMessage(socialId, message, messageTypeIndex, { gas:3000000 });
   return true;
 }
 
@@ -65,7 +79,9 @@ const getItemCatalogList = async () => {
 module.exports = {
     getUserTopList,
     getUser,
+    updateUser,
     getTopSocials,
+    getSocial,
     addUser,
     buyItem,
     addSocialMessage,

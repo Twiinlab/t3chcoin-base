@@ -35,7 +35,8 @@ contract T3chcoin {
   struct UserProfile {
     bytes32 userId;
     bytes32 userName;
-    bytes32 avatar;    
+    bytes32 avatar;
+    bytes32 selectedItem;
     Status status;
     bytes32[] socials;
   }
@@ -182,10 +183,11 @@ contract T3chcoin {
     }
   }
 
-  function getUserProfileById(bytes32 userId) public view returns( bytes32, bytes32, bytes32, uint, uint ) {
+  function getUserProfileById(bytes32 userId) public view returns( bytes32, bytes32, bytes32, bytes32, uint, uint ) {
     return (userId,
             users[userId].userName,
             users[userId].avatar,
+            users[userId].selectedItem,            
             balances[userId],
             userItems[userId].length);
   }
@@ -245,12 +247,14 @@ contract T3chcoin {
   }
 
   function buyItem(bytes32 userId, bytes32 itemId) public {
-    var itemCatalog = catalog[itemId];
-    if (balances[userId] > itemCatalog.price) {
-      balances[userId] -= itemCatalog.price;
-      var myItems = userItems[userId];
-      myItems.push(itemId);
-    }
+    // var itemCatalog = catalog[itemId];
+    var myItems = userItems[userId];
+    myItems.push(itemId);
+    // if (balances[userId] > itemCatalog.price) {
+    //   balances[userId] -= itemCatalog.price;
+    //   var myItems = userItems[userId];
+    //   myItems.push(itemId);
+    // }
   }
 
   function addSocialInUser(bytes32 userId, bytes32 socialId) public {
@@ -260,12 +264,12 @@ contract T3chcoin {
     }
   }
 
-  function updateUser(bytes32 userId, bytes32 userName, uint statusId, bytes32 socialId) public {
+  function updateUser(bytes32 userId, bytes32 userName, bytes32 avatar, bytes32 selectedItem) public {
     require(isInUserIds(userId));
     var newUserProfile = users[userId];
     newUserProfile.userName = userName;
-    newUserProfile.status = idToStatus[statusId];
-    addSocialInUser(userId, socialId);
+    newUserProfile.avatar = avatar;
+    newUserProfile.selectedItem = selectedItem;
   }
 
   //return array with top N user tokens

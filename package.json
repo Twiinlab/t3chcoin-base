@@ -18,8 +18,7 @@
     "test": "truffle test",
     "ganache": "ganache-cli",
     "init": "node ./server/init.js",
-    "app": "node ./server/app",
-    "web": "open http://localhost:3000/api/"
+    "app": "node ./server/app"
   },
   "private": true,
   "dependencies": {

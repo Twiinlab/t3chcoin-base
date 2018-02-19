@@ -12,8 +12,15 @@ exports.getUserTopList = function(req, res) {
 }
 
 exports.getUser = function(req, res) {
-    console.log('GET /api/user/:userId');
+    console.log('GET /api/user/:userid');
     t3chcoinManager.getUser(req.params.userid)
+    .then(result => { res.json(result); })
+    .catch(error => { console.log('error', error); });
+}
+
+exports.updateUser = function(req, res) {
+    console.log('PUT /api/user/:userid');
+    t3chcoinManager.updateUser(req.params.userid, req.query.username, req.query.avatar, req.query.selecteditem )
     .then(result => { res.json(result); })
     .catch(error => { console.log('error', error); });
 }
@@ -25,9 +32,16 @@ exports.getSocialTopList = function(req, res) {
     .catch(error => { console.log('error', error); });
 }
 
+exports.getSocial = function(req, res) {
+    console.log('GET /api/social');
+    t3chcoinManager.getSocial(req.params.socialid)
+    .then(result => { res.json(result); })
+    .catch(error => { console.log('error', error); });
+}
+
 exports.addUser = function(req, res) {
     console.log('POST /api/user');
-    t3chcoinManager.addUser(req.body.userid, req.body.username, req.body.socialid)
+    t3chcoinManager.addUser(req.body.userId, req.body.userName, req.body.socialId)
     .then(result => { res.json(result); })
     .catch(error => { console.log('error', error); });
 }
