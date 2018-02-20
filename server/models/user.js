@@ -5,7 +5,7 @@ var User = function (data) {
   this.userId = libs.parseHexToStr(data[0]);
   this.userName = libs.parseHexToStr(data[1]);
   this.avatar = libs.parseHexToStr(data[2]);
-  this.selectedItem = libs.parseHexToStr(data[3]);
+  this.selectedItem = libs.parseHexToDecimal(data[3]);
   this.balance = data[4].toNumber();
   this.itemsCount = data[5].toNumber();
 }

@@ -8,6 +8,11 @@ module.exports = {
       host: 'localhost',
       port: 8545,
       network_id: '*', //'1517269283564' // Match any network id
+    },
+    kubernetes: {
+      host: '192.168.1.133',
+      port: 8545,
+      network_id: '*', //'1517269283564' // Match any network id
     }
   }
 }

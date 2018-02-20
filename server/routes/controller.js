@@ -20,7 +20,7 @@ exports.getUser = function(req, res) {
 
 exports.updateUser = function(req, res) {
     console.log('PUT /api/user/:userid');
-    t3chcoinManager.updateUser(req.params.userid, req.query.username, req.query.avatar, req.query.selecteditem )
+    t3chcoinManager.updateUser(req.params.userid, req.body.username, req.body.avatar, req.body.selecteditem )
     .then(result => { res.json(result); })
     .catch(error => { console.log('error', error); });
 }
