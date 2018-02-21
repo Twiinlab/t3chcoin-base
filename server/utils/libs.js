@@ -16,8 +16,13 @@ function parseHexToDecimal (hex) {
   return parseInt(hex);
 }
 
+function parseByte32ToDecimal(str) {
+  return parseInt(str.substr(2));
+}
+
 module.exports = {
   parseStrToHex,
   parseHexToStr,
-  parseHexToDecimal
+  parseHexToDecimal,
+  parseByte32ToDecimal
 }
