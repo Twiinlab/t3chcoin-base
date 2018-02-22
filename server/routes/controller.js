@@ -1,4 +1,4 @@
-const { t3chcoinManager } = require('./service');
+const t3chcoinManager = require('./service');
 
 exports.getHello = function(req, res) {
     res.json({ message: 'hooray! welcome to t3chcoin api!'});
@@ -50,7 +50,7 @@ exports.buyItem = function(req, res) {
     console.log('PUT /api/user/:userid/buy/:itemid');
     t3chcoinManager.buyItem(req.params.userid, req.params.itemid)
     .then(result => { res.json(result); })
-    .catch(error => { console.log('error', error); });
+    .catch(error => { res.status(400).json({message: 'Not enough balance'}); });
 }
 
 exports.addSocialMessage = function(req, res) {

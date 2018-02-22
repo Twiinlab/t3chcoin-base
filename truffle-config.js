@@ -9,8 +9,8 @@ module.exports = {
       port: 8545,
       network_id: '*', //'1517269283564' // Match any network id
     },
-    kubernetes: {
-      host: '192.168.1.133',
+    gcloud: {
+      host: '35.229.121.201',
       port: 8545,
       network_id: '*', //'1517269283564' // Match any network id
     }

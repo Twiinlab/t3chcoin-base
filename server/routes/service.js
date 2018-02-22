@@ -1,10 +1,10 @@
 
 const Web3 = require('web3');
 const contract = require('truffle-contract');
-const t3chcoinArtifacts = require('../../../build/contracts/T3chcoin.json');
-const config = require('../../config');
-const libs = require('../../utils/libs');
-const { User, Social, Item } = require('../../models');
+const t3chcoinArtifacts = require('../../build/contracts/T3chcoin.json');
+const config = require('../config');
+const libs = require('../utils/libs');
+const { User, Social, Item } = require('../models');
 
 web3 = new Web3(new Web3.providers.HttpProvider(config.blockchain.provider));
 T3chcoinContract = contract(t3chcoinArtifacts);

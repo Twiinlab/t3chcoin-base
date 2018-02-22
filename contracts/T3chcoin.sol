@@ -247,14 +247,9 @@ contract T3chcoin {
   }
 
   function buyItem(bytes32 userId, bytes32 itemId) public {
-    // var itemCatalog = catalog[itemId];
-    var myItems = userItems[userId];
-    myItems.push(itemId);
-    // if (balances[userId] > itemCatalog.price) {
-    //   balances[userId] -= itemCatalog.price;
-    //   var myItems = userItems[userId];
-    //   myItems.push(itemId);
-    // }
+    require(balances[userId] >= catalog[itemId].price);
+    balances[userId] -= (catalog[itemId]).price;
+    (userItems[userId]).push(itemId);
   }
 
   function addSocialInUser(bytes32 userId, bytes32 socialId) public {
