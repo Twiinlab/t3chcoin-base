@@ -2,7 +2,7 @@
 const libs = require('../utils/libs');
 
 var User = function (data) {
-  this.userId = libs.parseHexToStr(data[0]);
+  this.userId = libs.parseByte32ToDecimal(data[0]);
   this.userName = libs.parseHexToStr(data[1]);
   this.avatar = libs.parseByte32ToDecimal(data[2]);
   this.selectedItem = libs.parseHexToDecimal(data[3]);
