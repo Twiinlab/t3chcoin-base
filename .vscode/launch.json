@@ -7,14 +7,8 @@
         {
             "type": "node",
             "request": "launch",
-            "name": "Launch Program",
+            "name": "Launch Develop",
             "program": "${workspaceFolder}/server/app.js"
-        },
-        {
-            "type": "node",
-            "request": "launch",
-            "name": "Launch Program",
-            "program": "${workspaceFolder}/http:/localhost:3000/api/"
         }
     ]
 }

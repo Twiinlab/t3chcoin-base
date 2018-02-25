@@ -65,3 +65,14 @@ exports.getItemCatalogList = function(req, res) {
     .then(result => { res.json(result); })
     .catch(error => { console.log('error', error); });
 }
+
+
+exports.getSmartContractInstance = function(req, res) {
+    console.log('GET /api/smartcontract/');
+    res.json(t3chcoinManager.getSmartContractInstance());
+}
+
+exports.setSmartContractInstance = function(req, res) {
+    console.log('PUT /api/smartcontract/:smartcontractid');
+    res.json(t3chcoinManager.setSmartContractInstance(req.params.smartcontractid));
+}

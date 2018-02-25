@@ -4,8 +4,6 @@ var app = express();
 var bodyParser = require('body-parser');
 var cors = require('cors');
 
-var init = require('./init');
-
 var corsOptions = {
   origin: true,
   credentials: true
@@ -18,9 +16,9 @@ app.use(bodyParser.json());
 var routes = require('./routes/routes')
 routes.assignRoutes(app);
 
-init();
-
-app.listen(3000,'0.0.0.0', function() {
-  console.log("server starting on http://localhost:3000");
+const PORT = process.env.PORT || 8080;
+app.listen(PORT, () => {
+  console.log(`App listening on port ${PORT}`);
+  console.log('Press Ctrl+C to quit.');
 });
 

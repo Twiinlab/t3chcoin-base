@@ -2,6 +2,9 @@ var controller = require('./controller')
 
 exports.assignRoutes = function(app) {
     app.get('/api/', controller.getHello); 
+
+    app.get('/api/smartcontract', controller.getSmartContractInstance);
+    app.put('/api/smartcontract/:smartcontractid', controller.setSmartContractInstance);
     
     app.get('/api/social', controller.getSocialTopList);
     app.get('/api/social/:socialid', controller.getSocial);

@@ -17,9 +17,9 @@
     "build": "truffle compile",
     "test": "truffle test",
     "ganache": "ganache-cli",
-    "init": "node ./server/init.js",
-    "app": "node ./server/app",
-    "app-pro": "NODE_ENV=gcloud node ./server/app"
+    "init": "NODE_ENV=gcloud node ./server/init.js",
+    "app-dev": "node ./server/app.js",
+    "start": "NODE_ENV=gcloud node ./server/app.js"
   },
   "private": true,
   "dependencies": {

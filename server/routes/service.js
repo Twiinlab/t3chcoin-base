@@ -76,6 +76,14 @@ const getItemCatalogList = async () => {
   }));
 }
 
+function setSmartContractInstance(newInstanceAddress) {
+  return config.setSmartContractInstance(newInstanceAddress);
+}
+
+function getSmartContractInstance() {
+  return config.getSmartContractInstance();
+}
+
 module.exports = {
     getUserTopList,
     getUser,
@@ -85,5 +93,7 @@ module.exports = {
     addUser,
     buyItem,
     addSocialMessage,
-    getItemCatalogList
+    getItemCatalogList,
+    setSmartContractInstance,
+    getSmartContractInstance
 };
