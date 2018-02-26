@@ -7,6 +7,7 @@ exports.assignRoutes = function(app) {
     app.put('/api/smartcontract/:smartcontractid', controller.setSmartContractInstance);
     
     app.get('/api/social', controller.getSocialTopList);
+    app.get('/api/social/full', controller.getFillSocialTopList);    
     app.get('/api/social/:socialid', controller.getSocial);
     app.post('/api/social', controller.addSocialMessage);
     

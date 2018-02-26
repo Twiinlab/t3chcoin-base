@@ -7,7 +7,9 @@ exports.getHello = function(req, res) {
 exports.getUserTopList = function(req, res) {
     console.log('GET /api/user');
     t3chcoinManager.getUserTopList()
-    .then(result => { res.json(result); })
+    .then(result => { 
+        res.json(result); 
+    })
     .catch(error => { console.log('error', error); });
 }
 
@@ -31,6 +33,14 @@ exports.getSocialTopList = function(req, res) {
     .then(result => { res.json(result); })
     .catch(error => { console.log('error', error); });
 }
+
+exports.getFillSocialTopList = function(req, res) {
+    console.log('GET /api/social/fill');
+    t3chcoinManager.getTopFillSocials()
+    .then(result => { res.json(result); })
+    .catch(error => { console.log('error', error); });
+}
+
 
 exports.getSocial = function(req, res) {
     console.log('GET /api/social');

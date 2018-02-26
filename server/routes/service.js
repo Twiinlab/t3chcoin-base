@@ -19,6 +19,16 @@ const getTopSocials = async () => {
   }));
 }
 
+const getTopFillSocials = async () => {
+  var contractInstance =  await T3chcoinContract.at(config.getSmartContractInstance());
+  var socials = (await contractInstance.getTopSocials.call(10)).map(libs.parseHexToStr);
+  return await Promise.all(socials.map(async (socialId) => {
+       let social = new Social(await contractInstance.getSocialProfileById.call(socialId)).toJson();
+       social.user = new User(await contractInstance.getUserProfileById.call(socialId)).toJson();
+       return social;
+  }));
+}
+
 const getSocial = async (socialId) => {
   var contractInstance =  await T3chcoinContract.at(config.getSmartContractInstance());
   return new Social(await await contractInstance.getSocialProfileById.call(socialId));
@@ -89,6 +99,7 @@ module.exports = {
     getUser,
     updateUser,
     getTopSocials,
+    getTopFillSocials,
     getSocial,
     addUser,
     buyItem,
